@@ -11,25 +11,24 @@ function App() {
   const[ searchTerm, setSearchTerm ] = useState('');
   
   useEffect(() =>{
-    fetch(feature_api)
+    fetcher(feature_api)
+  }, []);
+
+  function fetcher(api){
+    fetch(api)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setMovies(data.results)
       });
-  }, []);
+  }
 
   function handleSubmit(e){
     e.preventDefault()
     
     if(searchTerm){
-    fetch(search_api+searchTerm)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      setMovies(data.results)
-    });
-    setSearchTerm('');
+      fetcher(search_api+searchTerm)
+      setSearchTerm('');
   }
 
   }
@@ -41,6 +40,10 @@ function App() {
   return (
     <>
     <header className="header">
+      <span className="logo-container">
+      <h2 className="logo">C</h2>
+      </span>
+    
       <form onSubmit={handleSubmit}>
         <input
         className="search"
@@ -50,6 +53,7 @@ function App() {
         onChange={handleChange}
         />
         <button className="chill-btn" type="submit"> ChillFlix </button>
+        <button className="chill-btn-short" type="submit"> C </button>
         </form>
       </header>
     <div className="movie-container">
